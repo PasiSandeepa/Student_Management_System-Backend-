@@ -6,23 +6,23 @@ import edu.icet.repository.StudentRepository;
 import edu.icet.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class StudentServiceImpl implements StudentService {
-
-    private final StudentRepository studentRepository;
+    @Autowired
+    StudentRepository studentRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public void addStudents(Student student) {
         StudentEntity studentEntity = modelMapper.map(student, StudentEntity.class);
-        studentRepository.save(studentEntity);
+      studentRepository.save(studentEntity);
 
     }
 
@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(Student student) {
-    StudentEntity existing = studentRepository.findById(student.getId())
+    StudentEntity existing = studentRepository.findById(Long.valueOf(student.getId()))
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
         existing.setFristName(student.getFristName());
@@ -57,9 +57,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(int id) {
-        studentRepository.deleteById(id);
+        studentRepository.deleteById((long) id);
     }
-    }
+
+}
 
 
 

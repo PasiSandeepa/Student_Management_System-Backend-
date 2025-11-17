@@ -1,8 +1,6 @@
 package edu.icet.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,7 +14,8 @@ import java.time.LocalDate;
 @Table(name="student")
 public class StudentEntity {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String fristName;
     private String lastName;
     private  String email;
